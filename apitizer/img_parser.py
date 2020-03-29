@@ -16,6 +16,7 @@ class ImageParser:
         self.resp_data = None
         self.config = config
         self.value = dict()
+        self.last_update = None
 
     def find_image_in_page(self):
         resp = requests.get(self.url)
@@ -29,9 +30,18 @@ class ImageParser:
         return None
 
     def fetch_image(self):
+        if self.last_update is None:
+            self.last_update = datetime.now()
+        else:
+            if (datetime.now() - self.last_update).seconds < 60:
+                return False
+            else:
+                self.last_update = datetime.now()
+
         img_url = self.find_image_in_page()
         resp = requests.get(self.url + img_url, stream=True).raw
         resp_data = resp.read()
+
         if self.resp_data == resp_data:
             return False
         self.resp_data = resp_data
