@@ -4,6 +4,7 @@ import cv2
 import pytesseract
 import re
 from datetime import datetime
+from bs4 import BeautifulSoup
 
 from apitizer.month_conversion import MONTHS
 
@@ -16,8 +17,20 @@ class ImageParser:
         self.config = config
         self.value = dict()
 
+    def find_image_in_page(self):
+        resp = requests.get(self.url)
+        txt = resp.text
+        soup = BeautifulSoup(txt, 'lxml')
+        img_tags = soup.find_all('img')
+        for i in img_tags:
+            if re.match('^.*-1.jpg$', i["src"]):
+                return i["src"]
+
+        return None
+
     def fetch_image(self):
-        resp = requests.get(self.url, stream=True).raw
+        img_url = self.find_image_in_page()
+        resp = requests.get(self.url + img_url, stream=True).raw
         resp_data = resp.read()
         if self.resp_data == resp_data:
             return False
