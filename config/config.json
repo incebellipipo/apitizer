@@ -1,0 +1,85 @@
+{
+  "fields": [
+    {
+      "key": "total_tests",
+      "bounds": {
+        "up": 131,
+        "bottom": 181,
+        "left": 25,
+        "right": 220
+      }
+    },
+    {
+      "key": "confirmed_cases",
+      "bounds": {
+        "up": 195,
+        "bottom": 245,
+        "left": 25,
+        "right": 220
+      }
+    },
+    {
+      "key": "deaths",
+      "bounds": {
+        "up": 260,
+        "bottom": 310,
+        "left": 25,
+        "right": 220
+      }
+    },
+    {
+      "key": "icu_patients",
+      "bounds": {
+        "up": 330,
+        "bottom": 380,
+        "left": 25,
+        "right": 220
+      }
+    },
+    {
+      "key": "intubated_patients",
+      "bounds": {
+        "up": 390,
+        "bottom": 440,
+        "left": 25,
+        "right": 220
+      }
+    },
+    {
+      "key": "recovered_patients",
+      "bounds": {
+        "up": 460,
+        "bottom": 510,
+        "left": 25,
+        "right": 220
+      }
+    },
+    {
+      "key": "tests_done_today",
+      "bounds": {
+        "up": 145,
+        "bottom": 250,
+        "left": 655,
+        "right": 911
+      }
+    },
+    {
+      "key": "confirmed_cases_today",
+      "bounds": {
+        "up": 263,
+        "bottom": 358,
+        "left": 655,
+        "right": 911
+      }
+    },
+    {
+      "key": "deaths_today",
+      "bounds": {
+        "up": 389,
+        "bottom": 484,
+        "left": 655,
+        "right": 911
+      }
+    }
+  ]
+}
