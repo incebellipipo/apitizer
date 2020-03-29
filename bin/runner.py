@@ -1,18 +1,22 @@
-from apitizer import img_parser
 import json
+from flask import Flask
+from flask_restful import Api
+
+from apitizer import img_parser
+
+app = Flask(__name__)
+api = Api(app)
+
+with open('config/config.json') as f:
+    config = json.load(f)
+
+parser = img_parser.ImageParser(config)
 
 
-def main():
-    with open('config/config.json') as f:
-        config = json.load(f)
-
-    parser = img_parser.ImageParser(config, url=config["url"])
-    parser.fetch_image()
-    parser.preprocess_image()
-    parser.parse_image()
-
-    print(parser.value)
+@app.route("/", methods=['GET'])
+def daily():
+    return parser.get_results()
 
 
-if __name__ == "__main__":
-    main()
+app.run()
+

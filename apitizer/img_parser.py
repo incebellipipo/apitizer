@@ -6,17 +6,22 @@ import re
 
 
 class ImageParser:
-    def __init__(self, config, url):
-        self.url = url
+    def __init__(self, config):
+        self.url = config["url"]
         self.image = None
-
+        self.resp_data = None
         self.config = config
         self.value = dict()
 
     def fetch_image(self):
         resp = requests.get(self.url, stream=True).raw
-        image = np.asarray(bytearray(resp.read()), dtype="uint8")
+        resp_data = resp.read()
+        if self.resp_data == resp_data:
+            return False
+        self.resp_data = resp_data
+        image = np.asarray(bytearray(self.resp_data), dtype="uint8")
         self.image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+        return True
 
     @staticmethod
     def read_number(img, _type=int):
@@ -25,7 +30,9 @@ class ImageParser:
         for i in range(len(d['text'])):
             if int(d['conf'][i]) > 40:
                 if re.match('^[-+]?\d*\.?\d*$', d['text'][i]):
-                    s = d['text'][i].replace(".", "")
+                    s = d['text'][i]
+                    if _type == int:
+                        s = s.replace(".", "")
                     # Şu ana kadar yaptığım en zor type cast
                     return _type(s)
         return None
@@ -47,3 +54,9 @@ class ImageParser:
                 print(f"cant read key: %s" % field['key'])
             key = field['key']
             self.value[key] = number
+
+    def get_results(self):
+        if self.fetch_image():
+            self.preprocess_image()
+            self.parse_image()
+        return self.value
