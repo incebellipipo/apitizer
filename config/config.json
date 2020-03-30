@@ -7,7 +7,7 @@
       "bounds": {
         "up": 131,
         "bottom": 181,
-        "left": 25,
+        "left": 75,
         "right": 220
       }
     },
@@ -17,7 +17,7 @@
       "bounds": {
         "up": 195,
         "bottom": 245,
-        "left": 25,
+        "left": 75,
         "right": 220
       }
     },
@@ -26,8 +26,8 @@
       "type": "int",
       "bounds": {
         "up": 260,
-        "bottom": 310,
-        "left": 25,
+        "bottom": 315,
+        "left": 85,
         "right": 220
       }
     },
@@ -35,9 +35,9 @@
       "key": "icu_patients",
       "type": "int",
       "bounds": {
-        "up": 330,
-        "bottom": 380,
-        "left": 25,
+        "up": 325,
+        "bottom": 385,
+        "left": 75,
         "right": 220
       }
     },
@@ -46,8 +46,8 @@
       "type": "int",
       "bounds": {
         "up": 390,
-        "bottom": 440,
-        "left": 25,
+        "bottom": 445,
+        "left": 75,
         "right": 220
       }
     },
@@ -57,7 +57,7 @@
       "bounds": {
         "up": 460,
         "bottom": 510,
-        "left": 25,
+        "left": 75,
         "right": 220
       }
     },

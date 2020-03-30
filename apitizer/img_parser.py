@@ -77,9 +77,11 @@ class ImageParser:
 
     def preprocess_image(self):
         self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-        self.image = cv2.threshold(self.image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+        self.image = cv2.threshold(self.image, 245, 255, cv2.THRESH_TRUNC)[1]
+        self.image = cv2.threshold(self.image, 185, 255, cv2.THRESH_TOZERO)[1]
         self.image = cv2.bitwise_not(self.image)
-        self.image = cv2.GaussianBlur(self.image, (7, 7), 0)
+        kernel = np.ones((2, 2), np.uint8)
+        self.image = cv2.dilate(self.image, kernel, iterations=1)
 
     def parse_image(self, config):
         value = dict()
