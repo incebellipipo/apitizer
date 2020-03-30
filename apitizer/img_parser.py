@@ -30,13 +30,6 @@ class ImageParser:
         return None
 
     def fetch_image(self):
-        if self.last_update is None:
-            self.last_update = datetime.now()
-        else:
-            if (datetime.now() - self.last_update).seconds < 60:
-                return False
-            else:
-                self.last_update = datetime.now()
 
         img_url = self.find_image_in_page()
         resp = requests.get(self.url + img_url, stream=True).raw
@@ -44,6 +37,7 @@ class ImageParser:
 
         if self.resp_data == resp_data:
             return False
+        self.last_update = datetime.now().isoformat()
         self.resp_data = resp_data
         image = np.asarray(bytearray(self.resp_data), dtype="uint8")
         self.image = cv2.imdecode(image, cv2.IMREAD_COLOR)
@@ -114,5 +108,5 @@ class ImageParser:
         if self.fetch_image():
             self.preprocess_image()
             self.value = self.parse_image(self.config)
-            self.value["last_update"] = datetime.now().isoformat()
+        self.value["last_update"] = self.last_update
         return self.value
