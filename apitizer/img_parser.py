@@ -44,8 +44,17 @@ class ImageParser:
         return True
 
     @staticmethod
+    def scale_image(img):
+        width = img.shape[1]
+        height = img.shape[0]
+        scale = 40.0 / height
+        dim = (int(width * scale), int(height * scale))
+        return cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+
+    @staticmethod
     def read_number(img, _type=int):
-        custom_config = r'--oem 3 --psm 10 digits'
+        img = ImageParser.scale_image(img)
+        custom_config = r'--oem 3 --psm 10 digits -c tessedit_char_whitelist=01234567890'
         d = pytesseract.image_to_data(img, config=custom_config, output_type=pytesseract.Output.DICT)
         for i in range(len(d['text'])):
             if int(d['conf'][i]) > 40:
@@ -74,8 +83,9 @@ class ImageParser:
         self.image = cv2.threshold(self.image, 245, 255, cv2.THRESH_TRUNC)[1]
         self.image = cv2.threshold(self.image, 185, 255, cv2.THRESH_TOZERO)[1]
         self.image = cv2.bitwise_not(self.image)
-        kernel = np.ones((2, 2), np.uint8)
+        kernel = np.ones((3, 3), np.uint8)
         self.image = cv2.dilate(self.image, kernel, iterations=1)
+        self.image = cv2.GaussianBlur(self.image, (3, 3), 0)
 
     def parse_image(self, config):
         value = dict()
@@ -100,6 +110,7 @@ class ImageParser:
 
             if val is None:
                 print(f"cant read key: %s" % field['key'])
+
             key = field['key']
             value[key] = val
         return value
