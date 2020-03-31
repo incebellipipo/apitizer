@@ -14,15 +14,20 @@ class Updater:
     def initiate(self):
         self.runner_thread.start()
 
+    def update(self):
+        results = self.parser.get_results()
+        self.db_controller.insert_or_update(results)
+
     def run(self):
         while True:
             try:
-                results = self.parser.get_results()
-                self.db_controller.insert_or_update(results)
+                self.update()
                 print("Image updated")
             except cv2.error:
                 print("Can not process image")
             except AttributeError:
+                print("None type object appeared in result")
+            except KeyError:
                 print("None type object appeared in result")
             except:
                 print("unknown error")
