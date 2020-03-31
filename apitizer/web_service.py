@@ -2,20 +2,13 @@ import json
 from flask import Flask
 from flask import jsonify
 from flask_restful import Api
-from flask_cors import CORS
-
-from apitizer import data_updater
+# from flask_cors import CORS
 from apitizer import db_controller
 
 app = Flask(__name__)
 api = Api(app)
 
-CORS(app)
-
-with open('config/config.json') as f:
-    config = json.load(f)
-updater = data_updater.Updater(config)
-updater.initiate()
+# CORS(app)
 
 database = db_controller.DatabaseController()
 
