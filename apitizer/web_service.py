@@ -21,6 +21,7 @@ def today():
 
 
 @app.route("/all", methods=['GET'])
+@app.route("/all/", methods=['GET'])
 def all():
     query = database.find()
     result = []
