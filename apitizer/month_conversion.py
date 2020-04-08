@@ -8,3 +8,4 @@ MONTHS["agustos"] = 8
 MONTHS["eylul"] = 9
 
 # Daha fazla surmez heralde
+# İnşallah
