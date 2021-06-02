@@ -10,5 +10,5 @@ pymongo==3.10.1
 pytesseract==0.3.3
 pytz==2019.3
 requests==2.23.0
-urllib3==1.25.8
+urllib3==1.26.5
 Werkzeug==1.0.0
